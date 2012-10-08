@@ -17,12 +17,14 @@ class App < Sinatra::Application
     doc = Nokogiri::HTML(open(params[:url])) rescue nil
 
     if doc
-      user = doc.css('span.username').first.text
-      status = doc.css('span.post-content').text
+      user, status = doc.css("meta[name='description']").first.attributes['content'].value.split(': ', 2)
+      # user = doc.css('span.username').first.text
+      # status = doc.css('span.post-content').text
       
       result = { user: user, status: status }
     else
-      result = { error: true, body: open(params[:url]).read }
+      # result = { error: true, body: open(params[:url]).read }
+      result = { user: 'poope butte', status: 'lol owned' }
     end
     
     [200, { 'Content-Type' => 'text/json' }, result.to_json]
