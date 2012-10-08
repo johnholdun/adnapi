@@ -23,8 +23,7 @@ class App < Sinatra::Application
       
       result = { user: user, status: status }
     else
-      # result = { error: true, body: open(params[:url]).read }
-      result = { user: 'poope butte', status: 'lol owned' }
+      result = { error: true, body: open(params[:url]).read }
     end
     
     [200, { 'Content-Type' => 'text/json' }, result.to_json]
